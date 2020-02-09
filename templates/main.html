@@ -19,14 +19,25 @@
 
 
 <script charset="utf-8">
-$.notify("success!", "success");
+$.notify("hello!", "success");
 let username = new URLSearchParams(window.location.search).get("username");
 $.get("/load_all_messages", {"username": username}, function(data){
   console.log(data);
   for(let i in data){
     $("#messages").append(`<li>${JSON.stringify(data[i])}</li>`);
   }
+});
+
+setInterval(function(){
+  $.get("/load_unread_messages", {"username": username}, function(data){
+    for(let i in data){
+      $.notify(JSON.stringify(data[i]), "success");
+    }
   });
+},
+1000);
+
+
 </script>
 
 
@@ -34,7 +45,12 @@ $.get("/load_all_messages", {"username": username}, function(data){
 function sendMessage(){
   $.get("/create_message", {"message": $("#message").val(), "username": username, "sendto": $("#sendto").val()},
   function(data){
-    alert(data);
+    if(data == "failure"){
+      $.notify("Message not sent! either the username or YOUR username is not a registered user", "error");
+    }
+    else {
+      $.notify("Message probably sent", "success");
+    }
   });
 }
 
