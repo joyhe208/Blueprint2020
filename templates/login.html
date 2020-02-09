@@ -1,7 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>blah</h1>
+<div id="login-form" class="name">
+  
+<h1>Login</h1>
+<input type="text" value="username" name="username" id="username"/>
+<input type="password" value="password" name="password" id="password" />
+<button onclick="login()"></button>
+</div>
+
+<script charset="utf-8">
+  function login(){
+    $.get("/authenticate_login", {"username": $("#username").val(), "password": $("#password").val()}, 
+    function(data){
+      if(data == "Success"){
+        window.location.href = `main?username=${$("#username").val()}&password={$("#password").val()}`
+      }
+      else{
+        alert(data);
+      }
+    });
+  }
+</script>
+
 
 {% endblock %}
 
