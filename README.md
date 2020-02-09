@@ -12,3 +12,13 @@ By lunch:
   Joy: make function work and css
   Rishi:backend stuff (messaging)
   Alek: task create
+
+
+
+instructions
+
+`git add .`
+`git commit -m "blah"`
+`git pull origin master`
+`git commit -m "blah"`
+`git push origin master`
