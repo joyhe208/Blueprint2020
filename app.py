@@ -23,9 +23,24 @@ def get_general_tasks():
         return jsonify(json.load(infile))
 
 def create_task():
-    data["tasks"]=[]
-    with open ('tasks.json', 'w') as outfile: 
-        json.dump(data, outfile)
+    with open("data/tasks.json","r") as infile: 
+        tasks = json.load(infile)
+        largestID = 0
+        for task in tasks:
+            if task["taskID"] > largestID:
+                largestID = task["taskID"]
+        new_task = {
+            "description": request.args['description'], 
+            "initiator":request.args['username'], 
+            "estimated_time": request.args["estimated_time"], 
+            "reward" : request.args['reward'],
+            "taskID": largestID+1
+            }
+        tasks.append(new_task)
+    
+    with open ('data/tasks.json', 'w') as outfile: 
+        json.dump(tasks, outfile)
+    
     
 def verify_task_complete():
     with open('tasks.json', "r") as infile:
