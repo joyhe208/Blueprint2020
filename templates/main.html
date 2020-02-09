@@ -17,7 +17,7 @@ let username = new URLSearchParams(window.location.search).get("username");
 
 <script charset="utf-8">
   function sendMessage(){
-    $.get("/create_message", {"message": $("#message").val(), "username": username, "sendto": $("#sendto").val()}, 
+    $.get("/create_message", {"message": $("#message").val(), "username": username, "sendto": $("#sendto").val()},
     function(data){
       alert(data);
     });
@@ -34,27 +34,27 @@ let username = new URLSearchParams(window.location.search).get("username");
     "initiator": "rishi",
     "reward": 100,
     "description": "mow my grandma's lawn",
-    "estimated_time": "hour"
+    "estimated_time": "1"
   }, {
     "initiator": "joy",
     "reward": 30,
     "description": "tutor me in math",
-    "estimated_time": "hour"
+    "estimated_time": "1"
   },{
     "initiator": "joy",
     "reward": 30,
     "description": "tutor me in math",
-    "estimated_time": "hour"
+    "estimated_time": "1"
   },{
     "initiator": "joy",
     "reward": 30,
     "description": "tutor me in math",
-    "estimated_time": "hour"
+    "estimated_time": "1"
   },{
     "initiator": "joy",
     "reward": 30,
     "description": "tutor me in math",
-    "estimated_time": "hour"
+    "estimated_time": "1"
   }
 ]
 
@@ -64,20 +64,18 @@ window.onload = function(){
     var card = document.createElement("div");
     card.className = "card";
     var linebreak = document.createElement("br");
-    var initiatorText = document.createElement("div");
-    initiatorText.innerHTML = `task initiator: ${tasks[i].initiator}`;
+    var initiatorText = document.createElement("h3");
+
+    initiatorText.innerHTML = `${tasks[i].initiator}: ${tasks[i].description}`;
+    initiatorText.className = "card-header";
     card.appendChild(initiatorText);
-    var rewardText = document.createElement("div");
-    rewardText.innerHTML = `reward: ${tasks[i].reward}`;
-    card.appendChild(rewardText);
-    var descriptionText = document.createElement("div");
-    descriptionText.innerHTML = `description: ${tasks[i].description}`;
-    card.appendChild(descriptionText);
-    var timeText = document.createElement("div");
-    timeText.innerHTML = `estimated time: ${tasks[i].estimated_time}`;
-    card.appendChild(timeText);
+    var rewardText = document.createElement("li");
+    rewardText.innerHTML = `${tasks[i].reward} time dimes for ${tasks[i].estimated_time} hour(s)`;
+    rewardText.className = "list-group-item";
+    card.append(rewardText);
     document.getElementById('task-queue').append(card);
     document.getElementById('task-queue').append(linebreak);
+
   }
 }
 
