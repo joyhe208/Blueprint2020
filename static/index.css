@@ -1,9 +1,41 @@
 
 .card{
-  color: blue;
   font-family: 'Montserrat', sans-serif;
+  width: 25%
+  align-content: left;
+
 }
 
 .card-header{
-  color: #add8e6;
+  background-color: #add8e6;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.main-page{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+#task-queue{
+  grid-column-start: 1;
+  grid-column-end: 3;
+  position: absolute;
+  left: 30px;
+}
+
+.profile-name{
+  background-color: #add8e6;
+  height: 50px;
+  width: 100px;
+  padding: 10px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  text-align: center;
+}
+
+#messaging{
+  position: absolute;
+  bottom: 150px;
+  right: 30px;
 }
