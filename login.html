@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div id="login-form" class="name">
+  
+<h1>Login</h1>
+<input type="text" value="username" name="username" id="username"/>
+<input type="password" value="password" name="password" id="password" />
+<button onclick="createAccount()">Create New Account</button>
+<button onclick="login()">Login</button>
+</div>
+
+<script charset="utf-8">
+function login(){
+  $.get("/authenticate_login", {"username": $("#username").val(), "password": $("#password").val()}, 
+  function(data){
+    if(data == "Success"){
+      window.location.href = `main?username=${$("#username").val()}&password=${$("#password").val()}`;
+    }
+    else{
+      $.notify(data, "error");
+    }
+  });
+}
+
+function createAccount(){
+  $.get("/create_account", {"username": $("#username").val(), "password": $("#password").val()}, 
+  function(data){
+    if(data == "success"){
+      window.location.href = `main?username=${$("#username").val()}&password=${$("#password").val()}`;
+    }
+    else{
+      $.notify(data, "error");
+    }
+  });
+}
+
+
+</script>
+
+
+{% endblock %}
+

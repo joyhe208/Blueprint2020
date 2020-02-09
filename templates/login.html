@@ -1,14 +1,98 @@
 {% extends 'base.html' %}
+{% block head %}
+<style media="screen">
+
+  body {
+    background-color: #F05E23;
+    font-family: "calibri";
+    font-size: 30px;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #83CEC6;
+    font-family: "calibri";
+    border-radius: 15px;
+  }
+
+  li {
+    float: left;
+  }
+
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  /* Change the link color to #111 (black) on hover */
+  li a:hover {
+    background-color: #F29078;
+  }
+
+  .form {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+  }
+
+  h1 {
+    color: #ffffff;
+    font-family: "calibri";
+    font-size: 40px;
+    text-shadow: 3px 3px 10px #FF0000;
+  }
+  h3 {
+    color: #ffffff;
+    font-family: "calibri";
+    font-size: 17px;
+    text-shadow: 3px 3px 10px #FF0000;
+  }
+
+
+    #username {
+      width: 300px;
+      height: 50px;
+    }
+
+    #password {
+      width: 300px;
+      height: 50px;
+    }
+
+    #forgotpassword {
+      width: 350px;
+      height: 40px;
+    }
+  }
+</style>
+{% endblock %}
+
 {% block content %}
+      <ul>
+          <li><a href="index">Home</a></li>
+          <li><a href="login">Login</a></li>
+          <li><a href="login">Sign Up</a></li>
+      </ul>
+      <div class="form">
+          <h1>Login </h1>
+          <input type="text" value="username" name="username" id="username"/>
+          <input type="password" value="password" name="password" id="password" />
+          <button onclick="createAccount()">Create New Account</button>
+          <button onclick="login()">Login</button>
+      </div>
 
 <div id="login-form" class="name">
-  
-<h1>Login</h1>
-<input type="text" value="username" name="username" id="username"/>
-<input type="password" value="password" name="password" id="password" />
-<button onclick="createAccount()">Create New Account</button>
-<button onclick="login()">Login</button>
-</div>
+
 
 <script charset="utf-8">
 function login(){
@@ -35,9 +119,6 @@ function createAccount(){
   });
 }
 
-
 </script>
 
-
 {% endblock %}
-

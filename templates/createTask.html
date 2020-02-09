@@ -3,19 +3,20 @@
 
 <h1>blah</h1>
 <input type="text" value="task" name="task" id="task"/>
-<input type="text" value="description" name="" id="task"/>
-<input type="number" value="reward" name="reward" id="reward"/>
-<input type="text" value="estimate_time" name="estimated_time" id="estimated_time"/>
+<input type="text" value="description" name="" id="description"/>
+<input type="number" value=1 name="reward" id="reward"/>
+<input type="text" value="1 hour" name="estimated_time" id="estimated_time"/>
 <button onclick="createTask()"></button>
 
 <script charset="utf-8">
 let username = new URLSearchParams(window.location.search).get("username");
 
 function createTask(){
-  $.get("/createTask", {
-    "description": $("#description"), 
-    "reward": $("#reward"), 
-    "task": $("#task"), 
+  $.get("/createATask", {
+    "description": $("#description").val(), 
+    "reward": $("#reward").val(), 
+    "task": $("#task").val(), 
+    "estimated_time": $("#estimated_time").val(), 
     "username": username 
     }, function(data){
       window.location.href = `main?username=${$("#username").val()}`;

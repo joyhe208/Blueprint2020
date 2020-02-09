@@ -5,6 +5,7 @@ app = Flask(__name__)
 unreadMessages = {
 }
 
+@app.route('/index')
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -22,7 +23,12 @@ def get_general_tasks():
     with open("data/tasks.json", "r") as infile:
         return jsonify(json.load(infile))
 
-def create_task():
+@app.route("/createTask")
+def createTaskPage():
+    return render_template("createTask.html")
+
+@app.route("/createATask")
+def createTask():
     with open("data/tasks.json","r") as infile: 
         tasks = json.load(infile)
         largestID = 0
@@ -40,6 +46,8 @@ def create_task():
     
     with open ('data/tasks.json', 'w') as outfile: 
         json.dump(tasks, outfile)
+
+    return "success"
     
     
 def verify_task_complete():
