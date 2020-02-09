@@ -5,12 +5,16 @@
 
 {% block content %}
 
-<div class = "task-title">Available Tasks:</div>
+
+<div class = "main-page">
+  <div class = "task-title">Available Tasks:</div>
+  <div class = tasks id = "task-queue"></div>
+  <div class = profile id = "profile"></div>
+</div>
 
 <div class = "card" id = "messaging">
   <h1 class = "card-header" id = "message-head">messages</h1>
   <ul class = "list-group" id="messages">
-
   </ul>
   <input type="text" name="message" id="message"/>
   <br>
@@ -60,10 +64,7 @@ function sendMessage(){
 
 </script>
 
-<div class = "main-page">
-  <div class = tasks id = "task-queue"></div>
-  <div class = profile id = "profile"></div>
-</div>
+
 
 
 <script type="text/javascript">
@@ -72,27 +73,20 @@ function sendMessage(){
     "initiator": "rishi",
     "reward": 100,
     "description": "mow my grandma's lawn",
-    "estimated_time": "1"
+    "estimated_time": "1",
+    "taskID": 0
   }, {
     "initiator": "joy",
     "reward": 30,
     "description": "tutor me in math",
-    "estimated_time": "1"
+    "estimated_time": "1",
+    "taskID": 1
   },{
     "initiator": "joy",
     "reward": 30,
     "description": "tutor me in math",
-    "estimated_time": "1"
-  },{
-    "initiator": "joy",
-    "reward": 30,
-    "description": "tutor me in math",
-    "estimated_time": "1"
-  },{
-    "initiator": "joy",
-    "reward": 30,
-    "description": "tutor me in math",
-    "estimated_time": "1"
+    "estimated_time": "1",
+    "taskID": 2
   }
 ]
 
@@ -111,11 +105,14 @@ window.onload = function(){
     rewardText.innerHTML = `${tasks[i].reward} time dimes for ${tasks[i].estimated_time} hour(s)`;
     rewardText.className = "list-group-item";
     card.append(rewardText);
-    // var doButton = document.createELement("div");
-    // doButton.innerHTML = "Do Task";
-    // doButton.className = "do-button";
-    // card.append(doButton);
-    console.log(tasks[i]);
+
+    var doButton = document.createElement("div");
+    doButton.innerHTML = "Accept Task";
+    doButton.className = "do-button";
+    let curId = escape("task"+tasks[i].taskID);
+    doButton.id = curId;
+    doButton.onclick = function(){alert(curId);};
+    card.appendChild(doButton);
     document.getElementById('task-queue').append(card);
     document.getElementById('task-queue').append(linebreak);
   }

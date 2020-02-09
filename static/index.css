@@ -32,7 +32,7 @@
   padding: 10px;
   position: absolute;
   top: 0px;
-  right: 0px;
+  right: 5px;
   text-align: center;
   font-family: 'Montserrat', sans-serif;
   border-radius: 10%;
@@ -99,7 +99,7 @@ body{
   left: 30px;
 }
 
-/* .do-button{
+.do-button{
   font-weight: bold;
   padding: 5px;
   text-align: center;
@@ -107,4 +107,4 @@ body{
   box-shadow:2px 2px black;
   border-radius: 10%;
   cursor: pointer;
-} */
+}
