@@ -117,3 +117,9 @@ body{
   width: 40%;
 }
 
+#myAssignedTasks{
+  position: absolute;
+  top: 700px;
+  left: 50px;
+  width: 40%;
+}

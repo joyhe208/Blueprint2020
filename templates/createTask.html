@@ -11,6 +11,7 @@
 <script charset="utf-8">
 let username = new URLSearchParams(window.location.search).get("username");
 
+
 function createTask(){
   $.get("/createATask", {
     "description": $("#description").val(), 
@@ -19,7 +20,7 @@ function createTask(){
     "estimated_time": $("#estimated_time").val(), 
     "username": username 
     }, function(data){
-      window.location.href = `main?username=${$("#username").val()}`;
+      window.location.href = `main?username=${username}`;
   });
 }
 </script>

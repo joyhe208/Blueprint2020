@@ -8,7 +8,7 @@
 
 <div class = "main-page">
   <div class = "task-title">Available Tasks:</div>
-  <a href="createTask">createTask</a>
+  <a href="createTask" id="createTask">createTask</a>
 </div>
 
 <div class = "card" id = "messaging">
@@ -23,10 +23,12 @@
 </div>
 
 <div id="myCreatedTasks">
+<h1>My Created Tasks</h1>
   
 </div>
 
 <div id="myAssignedTasks">
+<h1>My Assigned Tasks</h1>
   
 </div>
 
@@ -38,6 +40,7 @@
 <script charset="utf-8">
 $.notify("hello!", "success");
 let username = new URLSearchParams(window.location.search).get("username");
+$("#createTask").attr("href", "createTask?username="+username);
 $('#profile').text(username);
 $.get("/load_all_messages", {"username": username}, function(data){
   console.log(data);
@@ -68,7 +71,7 @@ $.get("/get_general_tasks", function(tasks){
     doButton.className = "do-button";
     let curId = escape("generaltask"+tasks[i].taskId);
     doButton.id = curId;
-    doButton.onclick = function(){alert(curId);};
+    doButton.onclick = function(){$.get("acceptTask", {"username": username, "taskId": curId}, function(data){$.notify(data)})};
     tmp.appendChild(doButton);
     document.getElementById('task-queue').append(tmp);
     document.getElementById('task-queue').append(linebreak);
@@ -82,17 +85,14 @@ $.get("/get_general_tasks", function(tasks){
      doButton.className = "do-button";
      let curId = escape("mytask"+tasks[i].taskId);
      doButton.id = curId;
-     doButton.onclick = function(){$.get("/verify_task_complete", 
-                               {"username": username, "taskId": curId}, 
-                               function(data) {
-                                  alert(data);
-                               });};
+     let initiator = tasks[i].initiator;
+     let description = tasks[i].description;
+     doButton.onclick = function(){completeTask(description, initiator)};
+
       blah.appendChild(doButton);
       document.getElementById('myAssignedTasks').append(blah);
       document.getElementById('myAssignedTasks').append(linebreak);
     }
-
-
 
     if(tasks[i]["initiator"] == username){
 
@@ -104,7 +104,7 @@ $.get("/get_general_tasks", function(tasks){
      doButton.onclick = function(){$.get("/verify_task_complete", 
                                {"username": username, "taskId": curId}, 
                                function(data) {
-                                  alert(data);
+                                  $.notify(data);
                                });};
       card.appendChild(doButton);
       document.getElementById('myCreatedTasks').append(card);
@@ -126,6 +126,19 @@ setInterval(function(){
 
 function sendMessage(){
   $.get("/create_message", {"message": $("#message").val(), "username": username, "sendto": $("#sendto").val()},
+  function(data){
+    if(data == "failure"){
+      $.notify("Message not sent! either the username or YOUR username is not a registered user", "error");
+    }
+    else {
+      $.notify("Message probably sent", "success");
+    }
+  });
+}
+
+
+function completeTask(task, initiator){
+  $.get("/create_message", {"message": "taskCompleted: "+task, "username": username, "sendto": initiator},
   function(data){
     if(data == "failure"){
       $.notify("Message not sent! either the username or YOUR username is not a registered user", "error");

@@ -49,15 +49,35 @@ def createTask():
             "description": request.args['description'], 
             "initiator":request.args['username'], 
             "estimated_time": request.args["estimated_time"], 
-            "reward" : request.args['reward'],
-            "taskId": largestID+1
-            }
+            "reward" : int(request.args['reward']),
+            "taskId": largestID+1,
+            "assigned": ""
+        }
         tasks.append(new_task)
     
     with open ('data/tasks.json', 'w') as outfile: 
         json.dump(tasks, outfile)
 
     return "success"
+
+
+@app.route("/acceptTask", methods=("GET",))
+def acceptTask():
+    taskId = int(request.args["taskId"].replace("generaltask", ""))
+    with open('data/tasks.json', "r") as infile:
+        tasks = json.load(infile)
+        for i in range(len(tasks)):
+            task = tasks[i]
+            if task["taskId"] == taskId: 
+                if task["assigned"] != "": # "" means unasigned
+                    return "failure, task assigned already" # note: this never can happen.... probbably wait no lol  general has assigned tasks stoo
+                tasks[i]["assigned"] = request.args["username"]
+                with open("data/tasks.json", "w") as outfile:
+                    json.dump(tasks, outfile)
+                return "yay"
+    return "nooooo"
+
+
     
 @app.route("/verify_task_complete", methods=("GET",))
 def verify_task_complete():
@@ -66,9 +86,9 @@ def verify_task_complete():
         tasks = json.load(infile)
         for i in range(len(tasks)):
             task = tasks[i]
-            if task["assigned"] =="": # "" means unasigned
-                return "failure, task unassigned"
             if task["taskId"] == taskId: 
+                if task["assigned"] =="": # "" means unasigned
+                    return "failure, task unassigned"
                 reward = task["reward"]
                 with open("data/users.json","r") as infile:
                     users = json.load(infile)
