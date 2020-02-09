@@ -28,11 +28,11 @@ def verify_task_complete():
         for task in tasks:
             if task['taskID'] == user: # based on id 
                 reward = task["reward"]
-        with open("users.json","r") as infile:
+        with open("data/users.json","r") as infile:
             users = json.load(infile)
             users[torewardperson]["timedimes"]+=reward
             users[initiator]["timedimes"]-=reward
-            with open ('users.json', 'w') as outfile: 
+            with open ('data/users.json', 'w') as outfile: 
                 json.dump(data, outfile)
 
         del tasks[task]
@@ -51,6 +51,18 @@ def create_message():
             "message": request.args["message"]
         }
 
+        with open("data/users.json", "r") as f:
+            toExists = False
+            fromExists = False
+            users = json.load(f)
+            for user in users:
+                if user == message["to"]:
+                    toExists = True
+                if user == message["from"]:
+                    fromExists = True
+            if not (toExists and fromExists):
+                return "failure"
+
         # TODO: check that sendto is a real person, return False if not real
         messages.append(message)
         try:
@@ -68,9 +80,11 @@ def create_message():
 
 @app.route("/load_unread_messages", methods=("GET", ))
 def load_unread_messages():
+    global unreadMessages
+    print(unreadMessages)
     try:
         data = unreadMessages[request.args["username"]]
-        del unreadMessages
+        del unreadMessages[request.args["username"]]
         return jsonify(data)
     except:
         return jsonify([])
@@ -86,6 +100,26 @@ def load_all_messages():
             if message["from"] == user or message["to"] == user:
                 lst.append(message)
     return jsonify(lst)
+
+@app.route("/create_account", methods=("GET",))
+def create_account():
+    with open('data/users.json', "r") as infile:
+        users = json.load(infile)
+        for user in users: 
+            if request.args["username"] == user: 
+                return "name already taken"
+        users[request.args["username"]] = {
+            "pwdhash": request.args["password"],
+            "timedimes": 100,
+            "rating": 50,
+            "age": 16
+            #  "age": request.args["age"]
+        }
+        with open("data/users.json", "w") as outfile:
+            json.dump(users, outfile)
+            return "success"
+    return "failure"
+
 
 @app.route("/authenticate_login", methods=("GET",))
 def authenticate_login():

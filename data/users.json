@@ -1,14 +1,1 @@
-{
-  "rishi": {
-    "pwdhash": "123412341234",
-    "timedimes": 100,
-    "rating": 50,
-    "age": 16
-  },
-  "joe": {
-    "pwdhash": "joe",
-    "timedimes": 100,
-    "rating": 0,
-    "age": 106
-  }
-}
+{"rishi": {"pwdhash": "123412341234", "timedimes": 100, "rating": 50, "age": 16}, "joe": {"pwdhash": "joe", "timedimes": 100, "rating": 0, "age": 106}, "joy": {"pwdhash": "joy", "timedimes": 100, "rating": 50, "age": 16}, "blah": {"pwdhash": "blah", "timedimes": 100, "rating": 50, "age": 16}}
