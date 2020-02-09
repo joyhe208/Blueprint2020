@@ -1,11 +1,13 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import json
 app = Flask(__name__)
+
+unreadMessages = {
+}
 
 @app.route('/')
 def index():
     return render_template("index.html")
-
 
 @app.route('/main')
 def mainsite():
@@ -43,11 +45,47 @@ def create_message():
     with open('data/messages.json', "r") as infile:
         messages = json.load(infile)
 
+        message = {
+            "from": request.args["username"], 
+            "to": request.args["sendto"], 
+            "message": request.args["message"]
+        }
+
         # TODO: check that sendto is a real person, return False if not real
-        messages.append({"from": request.args["username"], "to": request.args["sendto"], "message": request.args["message"]})
+        messages.append(message)
+        try:
+            unreadMessages[request.args["username"]].append(message)
+        except:
+            unreadMessages[request.args["username"]] = [message]
+        try:
+            unreadMessages[request.args["sendto"]].append(message)
+        except:
+            unreadMessages[request.args["sendto"]] = [message]
+
         with open ('data/messages.json', 'w') as outfile: 
             json.dump(messages, outfile)
         return "success"
+
+@app.route("/load_unread_messages", methods=("GET", ))
+def load_unread_messages():
+    try:
+        data = unreadMessages[request.args["username"]]
+        del unreadMessages
+        return jsonify(data)
+    except:
+        return jsonify([])
+
+@app.route("/load_all_messages", methods=("GET", ))
+def load_all_messages():
+    user = request.args["username"]
+    lst = []
+    with open("data/messages.json", "r") as f:
+        messages = json.load(f)
+        for message in messages:
+            print(message)
+            if message["from"] == user or message["to"] == user:
+                lst.append(message)
+    return jsonify(lst)
 
 @app.route("/authenticate_login", methods=("GET",))
 def authenticate_login():
