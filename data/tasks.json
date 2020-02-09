@@ -4,5 +4,11 @@
     "reward": 100,
     "description": "mow my grandmas lawn",
     "estimated_time": "hour"
+  },
+  {
+    "initiator": "rishi",
+    "reward": 1000,
+    "description": "mow my grandmas other lawn",
+    "estimated_time": "2 hour"
   }
 ]
