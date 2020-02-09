@@ -5,14 +5,22 @@
 
 {% block content %}
 
-<div id = "messaging">
-  <h1>messages</h1>
-  <ul id="messages">
 
+<div class = "main-page">
+  <div class = "task-title">Available Tasks:</div>
+  <div class = tasks id = "task-queue"></div>
+  <div class = profile id = "profile"></div>
+</div>
+
+<div class = "card" id = "messaging">
+  <h1 class = "card-header" id = "message-head">messages</h1>
+  <ul class = "list-group" id="messages">
   </ul>
-  <input type="text" value="message" name="message" id="message"/>
-  <input type="text" value="sendto" name="bob" id="sendto"/>
-  <button onclick="sendMessage()"></button>
+  <input type="text" name="message" id="message"/>
+  <br>
+  <input type="text" value="send to" name="bob" id="sendto"/>
+  <br>
+  <div onclick="sendMessage()" id = "message-button">Send Message</div>
 </div>
 
 <div class = "main-page">
@@ -23,11 +31,11 @@
 <script charset="utf-8">
 $.notify("hello!", "success");
 let username = new URLSearchParams(window.location.search).get("username");
-$('#profile').val(username);
+$('#profile').text(username);
 $.get("/load_all_messages", {"username": username}, function(data){
   console.log(data);
-  for(let i in data){
-    $("#messages").append(`<li>${JSON.stringify(data[i])}</li>`);
+  for(let i = data.length -1; i>=0; i--){
+    $("#messages").append(`<li class = "list-group-item">From: ${data[i].from}<br>To: ${data[i].to}<br>Message: ${data[i].message}</li>`);
   }
 });
 
@@ -45,6 +53,14 @@ $.get("/get_general_tasks", function(tasks){
     rewardText.innerHTML = `${tasks[i].reward} time dimes for ${tasks[i].estimated_time} hour(s)`;
     rewardText.className = "list-group-item";
     card.append(rewardText);
+
+    var doButton = document.createElement("div");
+    doButton.innerHTML = "Accept Task";
+    doButton.className = "do-button";
+    let curId = escape("task"+tasks[i].taskID);
+    doButton.id = curId;
+    doButton.onclick = function(){alert(curId);};
+    card.appendChild(doButton);
     document.getElementById('task-queue').append(card);
     document.getElementById('task-queue').append(linebreak);
   }

@@ -51,20 +51,20 @@ def createTask():
     
     
 def verify_task_complete():
-    with open('tasks.json', "r") as infile:
+    with open('data/tasks.json', "r") as infile:
         tasks = json.load(infile)
         for task in tasks:
-            if task['taskID'] == user: # based on id 
+            if task["initiatior"] == request.args["username"]: # based on id 
                 reward = task["reward"]
         with open("data/users.json","r") as infile:
             users = json.load(infile)
             users[torewardperson]["timedimes"]+=reward
             users[initiator]["timedimes"]-=reward
             with open ('data/users.json', 'w') as outfile: 
-                json.dump(data, outfile)
+                json.dump(users, outfile)
 
         del tasks[task]
-        with open("tasks.json", "w") as outfile:
+        with open("data/tasks.json", "w") as outfile:
             json.dump(tasks)
 
 @app.route("/create_message", methods=("GET",))
