@@ -15,12 +15,15 @@
   <button onclick="sendMessage()"></button>
 </div>
 
-
-
+<div class = "main-page">
+  <div class="tasks" id="task-queue"></div>
+  <h1 class="profile-name" id="profile"></h1>
+</div>
 
 <script charset="utf-8">
 $.notify("hello!", "success");
 let username = new URLSearchParams(window.location.search).get("username");
+$('#profile').val(username);
 $.get("/load_all_messages", {"username": username}, function(data){
   console.log(data);
   for(let i in data){
@@ -28,73 +31,8 @@ $.get("/load_all_messages", {"username": username}, function(data){
   }
 });
 
-setInterval(function(){
-  $.get("/load_unread_messages", {"username": username}, function(data){
-    for(let i in data){
-      $.notify(JSON.stringify(data[i]), "success");
-    }
-  });
-},
-1000);
-
-
-</script>
-
-
-<script charset="utf-8">
-function sendMessage(){
-  $.get("/create_message", {"message": $("#message").val(), "username": username, "sendto": $("#sendto").val()},
-  function(data){
-    if(data == "failure"){
-      $.notify("Message not sent! either the username or YOUR username is not a registered user", "error");
-    }
-    else {
-      $.notify("Message probably sent", "success");
-    }
-  });
-}
-
-</script>
-
-<div class = "main-page">
-  <div class = tasks id = "task-queue"></div>
-  <div class = profile id = "profile"></div>
-</div>
-
-
-<script type="text/javascript">
-  var tasks = [
-  {
-    "initiator": "rishi",
-    "reward": 100,
-    "description": "mow my grandma's lawn",
-    "estimated_time": "1"
-  }, {
-    "initiator": "joy",
-    "reward": 30,
-    "description": "tutor me in math",
-    "estimated_time": "1"
-  },{
-    "initiator": "joy",
-    "reward": 30,
-    "description": "tutor me in math",
-    "estimated_time": "1"
-  },{
-    "initiator": "joy",
-    "reward": 30,
-    "description": "tutor me in math",
-    "estimated_time": "1"
-  },{
-    "initiator": "joy",
-    "reward": 30,
-    "description": "tutor me in math",
-    "estimated_time": "1"
-  }
-]
-
-window.onload = function(){
-  for(var i = 0; i< tasks.length; i++)
-  {
+$.get("/get_general_tasks", function(tasks){ 
+  for(var i = 0; i< tasks.length; i++) {
     var card = document.createElement("div");
     card.className = "card";
     var linebreak = document.createElement("br");
@@ -110,16 +48,28 @@ window.onload = function(){
     document.getElementById('task-queue').append(card);
     document.getElementById('task-queue').append(linebreak);
   }
-  var parser = document.createElement('a');
-  parser.href = window.location.href;
-  var profileName = document.createElement("div");
-  profileName.className = "profile-name";
-  var name = parser.search.split("=");
-  profileName.innerHTML = name[1];
-  document.getElementById('profile').append(profileName);
+});
+
+setInterval(function(){
+  $.get("/load_unread_messages", {"username": username}, function(data){
+    for(let i in data){
+      $.notify(JSON.stringify(data[i]), "success");
+    }
+  });
+},
+1000);
+
+function sendMessage(){
+  $.get("/create_message", {"message": $("#message").val(), "username": username, "sendto": $("#sendto").val()},
+  function(data){
+    if(data == "failure"){
+      $.notify("Message not sent! either the username or YOUR username is not a registered user", "error");
+    }
+    else {
+      $.notify("Message probably sent", "success");
+    }
+  });
 }
-
-
 
 </script>
 

@@ -17,6 +17,11 @@ def mainsite():
 def login():
     return render_template("login.html")
 
+@app.route("/get_general_tasks")
+def get_general_tasks():
+    with open("data/tasks.json", "r") as infile:
+        return jsonify(json.load(infile))
+
 def create_task():
     data["tasks"]=[]
     with open ('tasks.json', 'w') as outfile: 

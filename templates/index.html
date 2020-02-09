@@ -1,10 +1,136 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class = "title" >Community Time Bank</div>
-  <div class = "login-page">
-    <div>Start Here</div>
-    <div class = "button login">Login</div>
-    <div class = "button new">Create a new account</div>
-</div>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Time Bank</title>
+    <style>
+        body {
+          background-color: #F05E23;
+          font-family: "Lucida Console";
+          margin-left: 15px;
+          margin-right: 15px;
+        }
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #83CEC6;
+          border-radius: 15px;
+        }
 
-{% endblock %}
+        li {
+          float: left;
+        }
+
+        li a {
+          display: block;
+          color: white;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+        }
+
+        /* Change the link color to #111 (black) on hover */
+        li a:hover {
+          background-color: #F29078;
+        }
+
+        .active {
+          background-color: #F29078;
+        }
+
+
+        h1 {
+          color: #ffffff;
+          font-size: 65px;
+          text-shadow: 3px 3px 10px #FF0000;
+        }
+        h2 {
+          color: #ffffff;
+          font-size: 45px;
+          text-shadow: 2px 2px 8px #FF0000;
+        }
+        h3 {
+          color: #ffffff;
+          font-size: 30px;
+        }
+        .homeDes {
+          float: left;
+          margin-right: 15px;
+        }
+        .homeImg {
+          float: right;
+          width: 600px;
+          height: 350px;
+          border-radius: 15px;
+          margin-bottom: 100px;
+        }
+        pageSep {
+          margin-bottom: 100px;
+        }
+        .howTo {
+
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        /* Create three equal columns that floats next to each other */
+        .column {
+          float: left;
+          width: 30%;
+          padding: 10px;
+          height: 300px; /* Should be removed. Only for demonstration */
+          background-color: #F29078;
+          border-radius: 15px;
+          margin-right: 10px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+          content: "";
+          display: table;
+          clear: both;
+        }
+    </style>
+  </head>
+  <body>
+    <ul>
+        <li><a href="index">Home</a></li>
+        <li><a href="login">Login</a></li>
+        <li><a href="login">Sign Up</a></li>
+    </ul>
+
+    <h1><center>Time Bank</center></h1>
+    <h2><center>Welcome to the revolution of community service!</center></h2>
+    <div="pageSep">
+    <h3 class="homeDes"><img class="homeImg" src="https://www.niche.com/blog/wp-content/uploads/2019/01/importance-of-community-service-1200-1200x794.jpg" alt="image of community service">
+      Manage your daily community service tasks in real time with Time Bank’s convenient software
+      solutions. Stay aware of local service opportunities tailored precisely to your skill set. Get
+      rewarded for serving others. Create valuable reports tracking your volunteer hours. Join a
+      community full of enthusiastic volunteers just like you. Use this simple and powerful
+      community service tracking solution across platforms and devices.
+    </h3>
+    </div>
+    <h2><center>How It Works</center></h2>
+
+
+    <div class="row">
+      <div class="column">
+          <h3>Step 1: Create an account on Time Bank.</h3>
+      </div>
+      <div class="column">
+          <h3>Step 2: Check out our community of volunteers and choose the opportunity that interests
+          you the most.</h3>
+      </div>
+      <div class="column">
+          <h3>Step 3: Once you mark your volunteering as complete, it will show up on your profile's
+          list of completed community service hours.</h3>
+      </div>
+    </div>
+
+
+  </body>
+</html>
