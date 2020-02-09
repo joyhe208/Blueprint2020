@@ -73,6 +73,27 @@ $.get("/get_general_tasks", function(tasks){
     document.getElementById('task-queue').append(tmp);
     document.getElementById('task-queue').append(linebreak);
 
+    if(tasks[i]["assigned"] == username){
+    
+     let blah = card.cloneNode(true);
+
+     var doButton = document.createElement("div");
+     doButton.innerHTML = "Complete Task";
+     doButton.className = "do-button";
+     let curId = escape("mytask"+tasks[i].taskId);
+     doButton.id = curId;
+     doButton.onclick = function(){$.get("/verify_task_complete", 
+                               {"username": username, "taskId": curId}, 
+                               function(data) {
+                                  alert(data);
+                               });};
+      blah.appendChild(doButton);
+      document.getElementById('myAssignedTasks').append(blah);
+      document.getElementById('myAssignedTasks').append(linebreak);
+    }
+
+
+
     if(tasks[i]["initiator"] == username){
 
       var doButton = document.createElement("div");

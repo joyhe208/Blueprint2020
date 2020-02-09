@@ -23,6 +23,16 @@ def get_general_tasks():
     with open("data/tasks.json", "r") as infile:
         return jsonify(json.load(infile))
 
+#  @app.route("/get_assigned_tasks")
+#  def get_general_tasks():
+#      with open("data/tasks.json", "r") as infile:
+#          tasks = json.load(infile)
+#          mytasks = []
+#          for task in tasks:
+#              if task["assigned"] == request.args["username"]:
+#                  mytasks.append(task)
+#          return jsonify(mytasks)
+
 @app.route("/createTask")
 def createTaskPage():
     return render_template("createTask.html")
