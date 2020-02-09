@@ -3,6 +3,14 @@
     "initiator": "rishi",
     "reward": 100,
     "description": "mow my grandmas lawn",
-    "estimated_time": "hour"
+    "estimated_time": "hour", 
+    "taskID" : 0
+  },
+  {
+    "initiator": "rishi",
+    "reward": 1000,
+    "description": "mow my grandmas other lawn",
+    "estimated_time": "2 hour", 
+    "taskID" : 1
   }
 ]

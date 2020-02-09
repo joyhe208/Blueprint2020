@@ -1,6 +1,1 @@
-{
-  "rishi":[
-    {"sender": "alek", "message": "hey dude, how you doing"},
-    {"sender": "alek", "message": "hey dude, how you going"}
-  ]
-}
+[{"from": "alek", "to": "bob", "message": "hey dude, how you doing"}, {"from": "alek", "to": "bob", "message": "hey dude, how you going"}, {"from": "joe", "to": "sendto", "message": "message"}, {"from": "joe", "to": "sendto", "message": "message"}, {"from": "joe", "to": "joe", "message": "message"}, {"from": "joe", "to": "asdasdfa", "message": "message"}]

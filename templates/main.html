@@ -5,6 +5,30 @@
 
 {% block content %}
 
+<<<<<<< HEAD
+=======
+<script charset="utf-8">
+$.notify("success!", "success");
+let username = new URLSearchParams(window.location.search).get("username");
+</script>
+<h1>messages</h1>
+
+<input type="text" value="message" name="message" id="message"/>
+<input type="text" value="sendto" name="bob" id="sendto"/>
+<button onclick="sendMessage()"></button>
+
+<script charset="utf-8">
+  function sendMessage(){
+    $.get("/create_message", {"message": $("#message").val(), "username": username, "sendto": $("#sendto").val()}, 
+    function(data){
+      alert(data);
+    });
+  }
+
+
+</script>
+
+>>>>>>> fb3bbee8fdbc8841bd839c1faf7a8f0cb67d584c
 
 <div class = tasks id = "task-queue"></div>
 
