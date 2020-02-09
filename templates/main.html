@@ -8,8 +8,6 @@
 
 <div class = "main-page">
   <div class = "task-title">Available Tasks:</div>
-  <div class = tasks id = "task-queue"></div>
-  <div class = profile id = "profile"></div>
 </div>
 
 <div class = "card" id = "messaging">
@@ -21,6 +19,14 @@
   <input type="text" value="send to" name="bob" id="sendto"/>
   <br>
   <div onclick="sendMessage()" id = "message-button">Send Message</div>
+</div>
+
+<div id="myCreatedTasks">
+  
+</div>
+
+<div id="myAssignedTasks">
+  
 </div>
 
 <div class = "main-page">
@@ -54,15 +60,32 @@ $.get("/get_general_tasks", function(tasks){
     rewardText.className = "list-group-item";
     card.append(rewardText);
 
+    let tmp = card.cloneNode(true);
+
     var doButton = document.createElement("div");
     doButton.innerHTML = "Accept Task";
     doButton.className = "do-button";
     let curId = escape("task"+tasks[i].taskID);
     doButton.id = curId;
     doButton.onclick = function(){alert(curId);};
-    card.appendChild(doButton);
-    document.getElementById('task-queue').append(card);
+    tmp.appendChild(doButton);
+    document.getElementById('task-queue').append(tmp);
     document.getElementById('task-queue').append(linebreak);
+
+    if(tasks[i]["initiator"] == username){
+
+      var doButton = document.createElement("div");
+      doButton.innerHTML = "Verify Task Completion";
+      doButton.className = "do-button";
+      let curId = escape("task"+tasks[i].taskID);
+      doButton.id = curId;
+      doButton.onclick = function(){alert(curId);};
+      card.appendChild(doButton);
+      document.getElementById('myCreatedTasks').append(card);
+      document.getElementById('myCreatedTasks').append(linebreak);
+    }
+
+
   }
 });
 

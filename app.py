@@ -49,7 +49,7 @@ def createTask():
 
     return "success"
     
-    
+
 def verify_task_complete():
     with open('data/tasks.json', "r") as infile:
         tasks = json.load(infile)
