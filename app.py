@@ -33,14 +33,14 @@ def createTask():
         tasks = json.load(infile)
         largestID = 0
         for task in tasks:
-            if task["taskID"] > largestID:
-                largestID = task["taskID"]
+            if task["taskId"] > largestID:
+                largestID = task["taskId"]
         new_task = {
             "description": request.args['description'], 
             "initiator":request.args['username'], 
             "estimated_time": request.args["estimated_time"], 
             "reward" : request.args['reward'],
-            "taskID": largestID+1
+            "taskId": largestID+1
             }
         tasks.append(new_task)
     
@@ -49,23 +49,29 @@ def createTask():
 
     return "success"
     
-
+@app.route("/verify_task_complete", methods=("GET",))
 def verify_task_complete():
+    taskId = int(request.args["taskId"].replace("mytask", ""))
     with open('data/tasks.json', "r") as infile:
         tasks = json.load(infile)
-        for task in tasks:
-            if task["initiatior"] == request.args["username"]: # based on id 
+        for i in range(len(tasks)):
+            task = tasks[i]
+            if task["assigned"] =="": # "" means unasigned
+                return "failure, task unassigned"
+            if task["taskId"] == taskId: 
                 reward = task["reward"]
-        with open("data/users.json","r") as infile:
-            users = json.load(infile)
-            users[torewardperson]["timedimes"]+=reward
-            users[initiator]["timedimes"]-=reward
-            with open ('data/users.json', 'w') as outfile: 
-                json.dump(users, outfile)
+                with open("data/users.json","r") as infile:
+                    users = json.load(infile)
+                    users[task["assigned"]]["timedimes"]+=reward
+                    users[request.args["username"]]["timedimes"]-=reward
+                    with open ('data/users.json', 'w') as outfile: 
+                        json.dump(users, outfile)
 
-        del tasks[task]
-        with open("data/tasks.json", "w") as outfile:
-            json.dump(tasks)
+                del tasks[i]
+                with open("data/tasks.json", "w") as outfile:
+                    json.dump(tasks, outfile)
+                return "yay"
+    return "nooooo"
 
 @app.route("/create_message", methods=("GET",))
 def create_message():

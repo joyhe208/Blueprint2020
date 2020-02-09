@@ -108,3 +108,12 @@ body{
   border-radius: 10%;
   cursor: pointer;
 }
+
+
+#myCreatedTasks{
+  position: absolute;
+  top: 700px;
+  right: 50px;
+  width: 40%;
+}
+

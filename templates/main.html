@@ -8,6 +8,7 @@
 
 <div class = "main-page">
   <div class = "task-title">Available Tasks:</div>
+  <a href="createTask">createTask</a>
 </div>
 
 <div class = "card" id = "messaging">
@@ -65,7 +66,7 @@ $.get("/get_general_tasks", function(tasks){
     var doButton = document.createElement("div");
     doButton.innerHTML = "Accept Task";
     doButton.className = "do-button";
-    let curId = escape("task"+tasks[i].taskID);
+    let curId = escape("generaltask"+tasks[i].taskId);
     doButton.id = curId;
     doButton.onclick = function(){alert(curId);};
     tmp.appendChild(doButton);
@@ -77,9 +78,13 @@ $.get("/get_general_tasks", function(tasks){
       var doButton = document.createElement("div");
       doButton.innerHTML = "Verify Task Completion";
       doButton.className = "do-button";
-      let curId = escape("task"+tasks[i].taskID);
+      let curId = escape("mytask"+tasks[i].taskId);
       doButton.id = curId;
-      doButton.onclick = function(){alert(curId);};
+     doButton.onclick = function(){$.get("/verify_task_complete", 
+                               {"username": username, "taskId": curId}, 
+                               function(data) {
+                                  alert(data);
+                               });};
       card.appendChild(doButton);
       document.getElementById('myCreatedTasks').append(card);
       document.getElementById('myCreatedTasks').append(linebreak);
