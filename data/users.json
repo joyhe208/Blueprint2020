@@ -4,5 +4,11 @@
     "timedimes": 100,
     "rating": 50,
     "age": 16
+  },
+  "joe": {
+    "pwdhash": "joe",
+    "timedimes": 100,
+    "rating": 0,
+    "age": 106
   }
 }

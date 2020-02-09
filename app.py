@@ -35,16 +35,20 @@ def verify_task_complete():
         del tasks[task]
         with open("tasks.json", "w") as outfile:
             json.dump(tasks)
-       
+
+@app.route("/create_message", methods=("GET",))
 def create_message():
     # message from front end
-    with open('messages.json', "r") as infile:
+    with open('data/messages.json', "r") as infile:
         messages = json.load(infile)
-        messages.append(message)
-    with open ('messages.json', 'w') as outfile: 
-        json.dump(messages, outfile)
 
+        # TODO: check that sendto is a real person, return False if not real
+        messages.append({"from": request.args["username"], "to": request.args["sendto"], "message": request.args["message"]})
+        with open ('data/messages.json', 'w') as outfile: 
+            json.dump(messages, outfile)
+        return "success"
 
+@app.route("/authenticate_login", methods=("GET",))
 def authenticate_login():
     with open('data/users.json') as json_file:
         users = json.load(json_file)
@@ -54,8 +58,7 @@ def authenticate_login():
                     return "Success"
                 else: 
                     return "Password incorrect"
-            else: 
-                return "Username not found!"
+    return "Username not found!"
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
