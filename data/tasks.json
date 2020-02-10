@@ -1,1 +1,1 @@
-[]
+[{"description": "description", "initiator": "Jamie", "estimated_time": "1 hour", "reward": 1, "taskId": 3, "assigned": ""}, {"description": "im unable to ow my lawn plz mow it for me", "initiator": "cherlyn", "estimated_time": "half an hour", "reward": 30, "taskId": 4, "assigned": "joe"}, {"description": "i have some calc homework, plz do it for me", "initiator": "joe", "estimated_time": "10mins", "reward": 26, "taskId": 5, "assigned": "jamie"}]

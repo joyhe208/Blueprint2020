@@ -33,6 +33,12 @@ def get_general_tasks():
 #                  mytasks.append(task)
 #          return jsonify(mytasks)
 
+@app.route("/currency")
+def currency():
+    with open("data/users.json", 'r') as f:
+        data = json.load(f)
+        return str(data[request.args["username"]]["timedimes"])
+
 @app.route("/createTask")
 def createTaskPage():
     return render_template("createTask.html")

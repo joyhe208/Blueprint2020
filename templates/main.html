@@ -9,6 +9,7 @@
 <div class = "main-page">
   <div class = "task-title">Available Tasks:</div>
   <a href="createTask" id="createTask">createTask</a>
+  <h1 id="currency"> </h1>
 </div>
 
 <div class = "card" id = "messaging">
@@ -40,6 +41,11 @@
 <script charset="utf-8">
 $.notify("hello!", "success");
 let username = new URLSearchParams(window.location.search).get("username");
+$.get("/currency", {"username":username},function(data){
+  console.log(data)
+  $("#currency").text("timedimes: "+data);
+})
+
 $("#createTask").attr("href", "createTask?username="+username);
 $('#profile').text(username);
 $.get("/load_all_messages", {"username": username}, function(data){
